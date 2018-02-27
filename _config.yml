@@ -3,16 +3,16 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle:
-description:
-author: John Doe
-language:
+title: swing
+subtitle: 早点儿
+description: 描述
+author: sck
+language: zh
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://swingboy.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -79,4 +79,3 @@ theme: landscape
 deploy:
   type: git
   repository:  https://github.com/swingboy/swingboy.github.io
-
