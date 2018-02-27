@@ -4,10 +4,10 @@
 
 # Site
 title: swing
-subtitle: 早点儿
+subtitle: 
 description: 描述
 author: sck
-language: zh
+language: zh-CN
 timezone:
 
 # URL
@@ -72,10 +72,31 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: yilia ##maupassant  ##landscape
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
   repository:  https://github.com/swingboy/swingboy.github.io
+
+plugins: hexo-generate-feed
+
+jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: false
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
