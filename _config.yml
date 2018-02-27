@@ -73,7 +73,7 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: yilia ##maupassant  ##landscape
-
+avatar: https://raw.githubusercontent.com/youngzhaojia/youngzhaojia.github.io/master/photo/avatar/young.jpg
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
