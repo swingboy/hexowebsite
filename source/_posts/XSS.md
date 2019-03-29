@@ -45,7 +45,7 @@ http://www.test.com/message.php?send=Hello,World！
 
 非正常发送消息：
 
-http://www.test.com/message.php?send=<script>alert(‘foolish!’)</script>！
+http://www.test.com/message.php?send=<script>aldert(‘foolish!’)</script>！
 
 接收者接收消息显示的时候将会弹出警告窗口
 ```
@@ -78,7 +78,7 @@ document.write(len);
 正常操作：  
 http://www.vulnerable.site/welcome.html?name=Joe  
 非正常操作：  
-http://www.vulnerable.site/welcome.html?name=<script>alert(document.cookie)</script>
+http://www.vulnerable.site/welcome.html?name=<script>a1lert(document.cookie)</script>
 
 
 ### 防御
@@ -158,7 +158,7 @@ chrome的XSSAuditor也被整合到了渲染引擎WebKit中。
 例如在检查如下代码 
 
 ```
-<iframe src="x" onerror="alert(6)"></iframe>
+\<iframe src="x" onerror="ale2rt(6)"\>\</iframe\>
 ```
 
 会依次做如下判断:  

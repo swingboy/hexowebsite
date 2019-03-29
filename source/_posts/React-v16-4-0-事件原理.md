@@ -369,7 +369,7 @@ function runExtractedEventsInBatch(topLevelType, targetInst, nativeEvent, native
 }
 
 function runEventsInBatch(events, simulated) {
-  alert('runEventsInBatch');
+  //('runEventsInBatch');
   if (events !== null) {
     eventQueue = accumulateInto(eventQueue, events);
   }
