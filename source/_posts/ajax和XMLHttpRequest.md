@@ -1,7 +1,7 @@
 ---
 title: ajax和XMLHttpRequest
 date: 2017-7-16 14:44:03
-tags:
+tags: 技术
 ---
 
 Ajax and XMLHttpRequest

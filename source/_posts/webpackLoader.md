@@ -1,7 +1,7 @@
 ---
 title: webpackLoader
 date: 2019-03-29 20:47:50
-tags:
+tags: 技术
 ---
 ### 什么是 Loader ？
 本质上来说，loader 就是一个 node 模块，这很符合 webpack 中“万物皆模块”的思路。既然是 node 模块，那就一定会导出点什么。在 webpack 的定义中，loader 导出一个函数，loader 会在转换源模块（resource）的时候调用该函数。在这个函数内部，我们可以通过传入 this 上下文给 Loader API 来使用它们。

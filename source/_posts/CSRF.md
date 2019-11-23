@@ -1,7 +1,7 @@
 ---
 title: CSRF
 date: 2018-11-23 22:32:37
-tags:
+tags: 技术
 ---
 
 ### 什么是CSRF

@@ -1,7 +1,7 @@
 ---
 title: XSS
 date: 2018-11-23 22:32:05
-tags:
+tags: 技术
 ---
 
 #### 什么是XSS
