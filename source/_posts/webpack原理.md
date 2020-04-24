@@ -23,7 +23,7 @@ ES2015 import 语句
 CommonJS require() 语句 
 AMD define 和 require 语句 
 css/sass/less 文件中的 @import 语句 
-样式(url(...))或 HTML 文件(\<img src=...\>)中的图片链接(image url) 
+样式(url(...))或 HTML 文件(&lt;img src=...\&gt;)中的图片链接(image url) 
 
 ### 支持的模块类型
 

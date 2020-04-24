@@ -92,44 +92,44 @@ FileReader有四种读取文件的方式：<br/>
 
 ```
 <form action="/upload" enctype="multipart/form-data" method="post">
-        <fieldset>
-            <legend>读取文件：</legend>
-            <input type="file" id="File" name="name1">
-            <input type="button" value="中断" id="Abort">
-            <p>
-                <lable>读取进度：</lable>
-                <progress id="Progress" value="0" max="100"></progress>
-            </p>
-        </fieldset>
-        <div><input type="submit"></div>
-    </form>
-    <script>
+    <fieldset>
+        <legend>读取文件：</legend>
+        <input type="file" id="File" name="name1">
+        <input type="button" value="中断" id="Abort">
+        <p>
+            <lable>读取进度：</lable>
+            <progress id="Progress" value="0" max="100"></progress>
+        </p>
+    </fieldset>
+    <div><input type="submit"></div>
+</form>
+<script>
 
-        var progress = document.getElementById('Progress');
-        var events = {
-            load: function () {
-                console.log('loaded');
-            },
-            progress: function (percent) {
-                console.log(percent);
-                progress.value = percent;
-            },
-            success: function () {
-                console.log('success');
-            }
-        };
-        var loader;
-
-        // 选择好要上传的文件后触发onchange事件
-        document.getElementById('File').onchange = function (e) {
-            var file = this.files[0];
-            loader = new FileLoader(file, events);
-        };
-
-        document.getElementById('Abort').onclick = function () {
-            loader.abort();
+    var progress = document.getElementById('Progress');
+    var events = {
+        load: function () {
+            console.log('loaded');
+        },
+        progress: function (percent) {
+            console.log(percent);
+            progress.value = percent;
+        },
+        success: function () {
+            console.log('success');
         }
-    </script>
+    };
+    var loader;
+
+    // 选择好要上传的文件后触发onchange事件
+    document.getElementById('File').onchange = function (e) {
+        var file = this.files[0];
+        loader = new FileLoader(file, events);
+    };
+
+    document.getElementById('Abort').onclick = function () {
+        loader.abort();
+    }
+</script>
 ```
 
 

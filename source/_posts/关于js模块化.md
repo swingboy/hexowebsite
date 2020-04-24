@@ -147,7 +147,7 @@ js模块化编程，已经成为一个迫切的需求。理想情况下，开发
 
 #### 各种标准出现了（CommonJS、AMD、CMD、UMD、ES6）
 
-![](./img/module_pic.png)
+![](/imgs/关于js模块化/module_pic.png)
 
 #### 3.1 commonJS(Node)
 

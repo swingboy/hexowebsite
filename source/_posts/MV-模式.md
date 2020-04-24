@@ -25,7 +25,7 @@ MVC除了把应用程序分成View、Model层，还额外的加了一个Controll
 Model、View、Controller三个层次的依赖关系如下：
 
 
-![](./imgs/mv/mvc.png)
+![](/imgs/MV-模式/mvc.png)
 
 大体流程：  
 
@@ -208,7 +208,7 @@ MVP打破了View原来对于Model的依赖，其余的依赖关系和MVC模式�
 
 图示：
 
-![](./imgs/mv/mvp.png)
+![](/imgs/MV-模式/mvp.png)
 
 
 1、各部分之间的通信，都是双向的。  
@@ -349,7 +349,7 @@ MVVM 模式将 Presenter 改名为 ViewModel，基本上与 MVP 模式完全一�
 唯一的区别是，它采用双向绑定（data-binding）：View的变动，自动反映在 ViewModel，反之亦然.
 
 图示：
-![](./imgs/mv/mvvm.png)
+![](/imgs/MV-模式/mvvm.png)
 
 
 #### MVVM的调用关系
@@ -358,7 +358,7 @@ MVVM的调用关系和MVP一样。但是，在ViewModel当中会有一个叫Bind
 
 
 来张图再：  
-![](./imgs/mv/mvvm_binder.png)
+![](/imgs/MV-模式/mvvm_binder.png)
 
 MVVM把View和Model的同步逻辑自动化了。以前Presenter负责的View和Model同步不再手动地进行操作，而是交由框架所提供的Binder进行负责。只需要告诉Binder，View显示的数据对应的是Model哪一部分即可。(重点区别)
 
@@ -476,7 +476,7 @@ flux的核心思想和代码实现虽然很简单（基本上就是一个event d
 
 图示：
 
-![](./imgs/mv/flux.png)
+![](/imgs/MV-模式/flux.png)
 
 ##### 基本概念（组成部分）：
 
@@ -497,11 +497,11 @@ Flux 的最大特点，就是数据的"单向流动"：
 上面过程中，数据总是"单向流动"，任何相邻的部分都不会发生数据的"双向流动"。这保证了流程的清晰。
 
 
-![](./imgs/mv/flux-abstract.png)
+![](/imgs/MV-模式/flux-abstract.png)
 
 对比MVC  
 
-![](./imgs/mv/MVC_bad.png)
+![](/imgs/MV-模式/MVC_bad.png)
 
 
 ## 总结
