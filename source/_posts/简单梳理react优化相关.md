@@ -532,6 +532,41 @@ shouldComponentUpdate: (nextProps = {}, nextState = {}) => {
 
 seamless-Immutable是一套轻量级的持久化数据结构库 , seamless-immutable 并没有实现完整的 Persistent Data Structure 而是使用 Object.defineProperty（因此只能在 IE9 及以上使用）扩展了 JavaScript 的 Array 和 Object 对象来实现，只支持 Array 和 Object 两种数据类型，API 基于与 Array 和 Object 操持不变。代码库非常小，压缩后下载只有 2K。相比 Immutable.js 压缩后下载有 16K而言，小巧了很多, 而且API比较简洁，易懂。
 
+### 小心使用getDerivedStateFromProps
+这个生命周期函数是为了替代componentWillReceiveProps存在的，所以在你需要使用componentWillReceiveProps的时候，就可以考虑使用getDerivedStateFromProps来进行替代了。
+
+而getDerivedStateFromProps是一个静态函数，也就是这个函数不能通过this访问到class的属性，也并不推荐直接访问属性。而是应该通过参数提供的nextProps以及prevState来进行判断，根据新传入的props来映射到state。
+
+- 需要注意的是，如果props传入的内容不需要影响到你的state，那么就需要返回一个null，这个返回值是必须的，所以尽量将其写到函数的末尾。
+
+***会被频繁地触发***
+无论是组件调用了 setState、接收的 props 发生了变化, 或是父组件的更新都会导致子组件上的 getDerivedStateFromProps被触发.
+
+***使用时须小心***
+
+由于 getDerivedStateFromProps 会在 setState() 后被调用, 并且它的返回值会被用于更新数据. 这意味着你会在 setState之后触发 getDerivedStateFromProps, 然后可能意外地再次 "setState()"
+
+getDerivedStateFromProps(nextProps) 函数中的第一个位置参数未必是 "新" 的 props. 在组件内调用了 setState() 时, getDerivedStateFromProps 会被调用. 但是此时的组件其实并没有获得 "新" 的 props,这个 nextProps 的值和原来的 props 是一样的。这就导致了我们在使用 getDerivedStateFromProps 时, 必须添加很多逻辑判断语句来处理 props 上的更新和 state 上的更新, 避免意外地返回了一个 Updater 再次更新数据, 导致数据异常.
+
+```
+static getDerivedStateFromProps(nextProps, prevState) {
+  let {sex, birthday, nickname} = nextProps.profile
+  if ( (nickname != prevState.nickname
+    || sex != prevState.sex
+    || birthday != prevState.birthday)
+    && prevState.random === '') {
+    return nextProps.profile
+  }
+
+  if (!prevState.random) { // 我们也会在本组件的state添加一个random来区分是否是来自本组件内部的更新，而不是props的更新
+    return prevState
+  }
+
+  return null
+}
+
+
+```
 
 ### hooks相关
 
