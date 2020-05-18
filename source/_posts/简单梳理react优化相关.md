@@ -668,23 +668,27 @@ function Child({ callback }) {
 - useMemo和useCallback都会在组件第一次渲染的时候执行，之后会在其依赖的变量发生改变时再次执行；并且这两个hooks都返回缓存的值，useMemo返回缓存的变量，useCallback返回缓存的函数。
 
 
-#### 到底是否一定要用useMemo/useCallback进行优化
+#### 是否一定要用useMemo/useCallback进行优化
 
 useMemo/useCallback的使用非常简单，不过我们需要思考一个问题，使用他们一定能够达到优化的目的吗？
+
 React的学习经常容易陷入过度优化的误区。一些人在得知shouldComponentUpdate能够优化性能，恨不得每个组件都要用一下，不用就感觉自己的组件有问题。useMemo/useCallback也是一样。
-明白了记忆函数的原理，我们应该知道，记忆函数并非完全没有代价，我们需要创建闭包，占用更多的内存，用以解决计算上的冗余。
-useMemo/useCallback也是一样，这是一种成本上的交换。那么我们在使用时，就必须要思考，这样的交换，到底值不值？
+
+我们知道记忆函数的原理，应该知道，记忆函数并非完全没有代价，我们需要创建闭包，占用更多的内存，用以解决计算上的冗余。
+useMemo/useCallback也是一样，这是一种成本上的交换。那么我们在使用时，就必须要思考，这样的交换，到底值不值。
+
 如果不使用useCallback，我们就必须在函数组件内部创建超多的函数，这种情况是不是就一定有性能问题呢？
 
-不是的！
+答案是否定的
+
 我们知道，一个函数执行完毕之后，就会从函数调用栈中被弹出，里面的内存也会被回收。因此，即使在函数内部创建了多个函数，执行完毕之后，这些创建的函数也都会被释放掉。函数式组件的性能是非常快的。相比class，函数更轻量，也避免了使用高阶组件、renderProps等会造成额外层级的技术。使用合理的情况下，性能几乎不会有什么问题。
 而当我们使用useMemo/useCallback时，由于新增了对于闭包的使用，新增了对于依赖项的比较逻辑，因此，盲目使用它们，甚至可能会让你的组件变得更慢。
 大多数情况下，这样的交换，并不划算，或者赚得不多。你的组件可能并不需要使用useMemo/useCallback来优化。
 
 
-### 合理运用 mixin、 hoc、render props、hooks
+### mixin、hoc、render props、hooks ？
 
-之间的区别
+区别与联系，合理运用
 
 
 ### 数据流管理
@@ -734,7 +738,6 @@ class ParentComponent extends React.Component {
 
 而对于Context的消费者，通过如下方式访问父组件提供的Context。
 
-
 ```
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -759,7 +762,7 @@ class ChildComponent extends React.Component {
 }
 ```
 
-新的api
+新的context：
 
 ```
 import React from 'react'
@@ -793,7 +796,6 @@ render() {
     </RootContext.Provider>
   </div>
 }
-
 
 //子组件，获取context数据
 return <RootContext.Consumer>
@@ -848,7 +850,6 @@ function ThemedButton() {
   );
 }
 ```
-
 
 当然，必不可少的还有redux，关于redux的内容就太多了
 
@@ -1025,7 +1026,6 @@ render() {
 ### 复杂运算引入webworker
 
 对于高的计算，引入webworker。后台执行复杂运算
-
 
 ## 3.性能度量、性能检测
 
