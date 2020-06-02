@@ -158,7 +158,7 @@ chrome的XSSAuditor也被整合到了渲染引擎WebKit中。
 例如在检查如下代码 
 
 ```
-\<iframe src="x" onerror="ale2rt(6)"\>\</iframe\>
+\<iframe src="x" onerror="alert(6)"\>\</iframe\>
 ```
 
 会依次做如下判断:  
@@ -172,3 +172,112 @@ chrome的XSSAuditor也被整合到了渲染引擎WebKit中。
 
 >火狐浏览器为什么没有xss filter机制
 >XSS攻击也应正了安全圈内非常有名的一句话：所有的输入都是有害的。
+
+### 建立XSS 防火墙
+
+#### 内联事件拦截
+
+主动防御
+
+```
+\<img src="{路径}" /\>
+\<img src="{路径" onload="alert(/xss/)}" /\>
+```
+
+```
+<button onclick="console.log('target')">CLICK ME</button>
+<script>
+	document.addEventListener('click', function(e) {
+		console.log('bubble');
+	});
+
+	document.addEventListener('click', function(e) {
+		console.log('capture');
+		//e.stopImmediatePropagation();
+        // ele.onclick = null
+	}, true);
+</script>
+```
+
+
+#### 被动扫描
+
+就是把页面里所有元素都扫描一遍，检测那些 on 开头的内联属性，看看是不是存在异常。
+
+
+##### 字符策略的缺陷
+
+光靠代码字符串来判断，还是会有疏漏的。尤其是黑客们知道有这么个玩意存在，会更加小心了。把代码转义用以躲避关键字，并将字符存储在其他地方，以躲过长度检测，即可完全绕过我们的监控了：
+```
+\<img src="*" onerror="window['ev'+'al'](this.align)" align="alert('a mass of code...')"/\>
+```
+
+#### 可疑模块拦截
+
+```
+let raw_fn = Element.prototype.setAttribute;
+
+Element.prototype.setAttribute = function(name, value) {
+
+	if (this.tagName == 'SCRIPT' && /^src$/i.test(name)) {
+		if (/xss/.test(value)) {
+			if (confirm('试图加载可疑模块：\n\n' + value + '\n\n是否拦截？')) {
+				return;
+			}
+		}
+	} else if (xxxx) {
+        //
+    } else {
+        //
+    }
+
+	raw_fn.apply(this, arguments);
+};
+
+var el = document.createElement('script');
+el.setAttribute('SRC', 'http://www.etherdream.com/xss/alert.js');
+document.body.appendChild(el);
+
+```
+
+
+```
+// 防御
+(function() {
+	function installHook(window) {
+		var raw_fn = window.Element.prototype.setAttribute;
+
+		// 勾住当前接口
+		window.Element.prototype.setAttribute = function(name, value) {
+			// 试试
+			alert(name);
+			// 向上调用
+			raw_fn.apply(this, arguments);
+		};
+	}
+	// 先保护当前页面
+	installHook(window);
+
+	document.addEventListener('DOMNodeInserted', function(e) {
+		var element = e.target;
+
+		// 给框架里环境也装个钩子
+		if (element.tagName == 'IFRAME') {
+			installHook(element.contentWindow);
+		}
+	}, true);
+})();
+
+
+// 反射出纯净的接口
+var frm = document.createElement('iframe');
+document.body.appendChild(frm);
+var raw_fn = frm.contentWindow.Element.prototype.setAttribute;
+
+// 创建脚本
+var el = document.createElement('script');
+raw_fn.call(el, 'SRC', 'http://www.etherdream.com/xss/alert.js');
+document.body.appendChild(el);
+```
+
+
